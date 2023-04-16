@@ -20,8 +20,6 @@ Add SaleDateConverted Date;
 Update NashvilleHousing
 Set SaleDateConverted = Convert(date, SaleDate)
 
-Select *
-From PortfolioProject1..NashvilleHousing
 
 
 ----------------------------------------------------------------------
@@ -65,23 +63,13 @@ From PortfolioProject1..NashvilleHousing
 
 Alter Table NashvilleHousing
 Add PropertySplitAddress Nvarchar(255);
-
-Update NashvilleHousing
-Set PropertySplitAddress = SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1)
-
-
 Alter Table NashvilleHousing
 Add PropertySplitCity Nvarchar(255);
 
 Update NashvilleHousing
+Set PropertySplitAddress = SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1)
+Update NashvilleHousing
 Set PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) +1, LEN(PropertyAddress))
-
-Select *
-From PortfolioProject1..NashvilleHousing
-
-
-Select OwnerAddress
-From PortfolioProject1..NashvilleHousing
 
 Select
 PARSENAME(Replace(OwnerAddress, ',', '.'), 3),
@@ -91,26 +79,17 @@ From PortfolioProject1..NashvilleHousing
 
 Alter Table NashvilleHousing
 Add OwnerSplitAddress Nvarchar(255);
-
-Update NashvilleHousing
-Set OwnerSplitAddress = PARSENAME(Replace(OwnerAddress, ',', '.'), 3)
-
-
 Alter Table NashvilleHousing
 Add OwnerSplitCity Nvarchar(255);
-
-Update NashvilleHousing
-Set OwnerSplitCity = PARSENAME(Replace(OwnerAddress, ',', '.'), 2)
-
-
 Alter Table NashvilleHousing
 Add OwnerSplitState Nvarchar(255);
 
 Update NashvilleHousing
+Set OwnerSplitAddress = PARSENAME(Replace(OwnerAddress, ',', '.'), 3)
+Update NashvilleHousing
+Set OwnerSplitCity = PARSENAME(Replace(OwnerAddress, ',', '.'), 2)
+Update NashvilleHousing
 Set OwnerSplitState = PARSENAME(Replace(OwnerAddress, ',', '.'), 1)
-
-Select *
-From PortfolioProject1..NashvilleHousing
 
 
 
@@ -152,13 +131,9 @@ Select *,
 From PortfolioProject1..NashvilleHousing
 --ORDER BY ParcelID
 )
---DELETE
---FROM RowNumCTE
---WHERE row_num > 1
-SELECT *
+DELETE
 FROM RowNumCTE
 WHERE row_num > 1
-ORDER BY PropertyAddress
 
 
 
